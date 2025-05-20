@@ -40,7 +40,6 @@ public class UsuarioBO {
         usuario.setSenha("c" + usuarioDTO.getCpf());
         usuario.setPerfil(usuarioDTO.getPerfil());
 
-        System.out.println("teste");
         usuarioDAO.persist(usuario);
 
         return usuario;
