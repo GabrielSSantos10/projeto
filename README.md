@@ -1,4 +1,4 @@
-# projetoweb_felipe-bruna
+# Projeto_Qualidade_de_Software
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
