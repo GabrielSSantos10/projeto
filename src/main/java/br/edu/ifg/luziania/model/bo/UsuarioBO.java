@@ -103,6 +103,28 @@ public class UsuarioBO {
         }
     }
 
+    public void atualizarUsuarioPorId(UsuarioDTO usuarioAtualizado) {
+        Optional<Usuario> optionalUsuario = buscarUsuarioPorId(usuarioAtualizado.getId());
+
+        if (optionalUsuario.isPresent()) {
+            Usuario usuarioEntidade = optionalUsuario.get();
+
+            usuarioEntidade.setNome(usuarioAtualizado.getNome());
+            usuarioEntidade.setEmail(usuarioAtualizado.getEmail());
+            usuarioEntidade.setPerfil(usuarioAtualizado.getPerfil());
+
+            if (usuarioAtualizado.getSenha() != null && !usuarioAtualizado.getSenha().isEmpty()) {
+                usuarioEntidade.setSenha(usuarioAtualizado.getSenha());
+            }
+
+            usuarioDAO.persist(usuarioEntidade);
+        }
+    }
+
+    public List<Usuario> listarTodosUsuarios() {
+        return usuarioDAO.listarTodos(); // ou o nome que você estiver usando para listar tudo no DAO
+    }
+
     public List<Usuario> pesquisarUsuarios(String nome, String email, String username) {
         if ((nome == null || nome.isEmpty()) &&
                 (email == null || email.isEmpty()) &&

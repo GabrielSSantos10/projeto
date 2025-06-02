@@ -85,6 +85,7 @@ public class UsuarioController {
         return Response.ok(usuarioJson).build();
     }
 
+    //endpoint referente exibir a lista de usuarios em /site_admin/usuario_page
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)

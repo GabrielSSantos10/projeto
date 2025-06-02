@@ -8,7 +8,13 @@ window.onload = function () {
         const cpf = document.getElementById('cpf').value;
         const email = document.getElementById('email').value;
 
-        fetch(`/site_admin/pesquisar?nome=${nome}&cpf=${cpf}&email=${email}`)
+        fetch(`/site_admin/pesquisar?nome=${nome}&cpf=${cpf}&email=${email}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json',
+            }
+        })
             .then(response => {
                 if (!response.ok) {
                     return response.text().then(errorMessage => {
@@ -34,17 +40,25 @@ window.onload = function () {
                 listItem.className = 'user-list-item';
                 listItem.innerHTML = `
                     Nome: ${user.nome}, CPF: ${user.cpf}, Email: ${user.email}
+                    <img src="/img/editar.png" alt="Editar usuário" class="edit-icon" data-user-id="${user.id}" />
                     <img src="/img/lixeira.png" alt="Deletar usuário" class="delete-icon" data-user-id="${user.id}" />
                 `;
-
                 userList.appendChild(listItem);
             });
 
             document.querySelectorAll('.delete-icon').forEach(icon => {
-                icon.addEventListener('click', function() {
+                icon.addEventListener('click', function () {
                     if (confirm("Você tem certeza que deseja deletar o usuário? Essa alteração não poderá ser desfeita.")) {
                         deleteUser(this.dataset.userId);
                     }
+                });
+            });
+
+            document.querySelectorAll('.edit-icon').forEach(icon => {
+                icon.addEventListener('click', function () {
+                    const userId = this.dataset.userId;
+                    localStorage.setItem('usuarioEditarId', userId);
+                    window.location.href = "/site_admin/editarUsuario";
                 });
             });
 
@@ -107,3 +121,5 @@ window.onload = function () {
 
     loadCadastroUsuarioPage();
 };
+
+

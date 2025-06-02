@@ -104,19 +104,26 @@ button:active {
 }
 
 .user-list-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    padding: 5px;
-    border-bottom: 1px solid #ddd;
+    position: relative;
+    padding: 10px 60px 10px 0;
+    border-bottom: 1px solid #eee;
 }
 
-.delete-icon {
+.edit-icon, .delete-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     width: 20px;
     height: 20px;
     cursor: pointer;
-    margin-left: 10px;
+}
+
+.edit-icon {
+    right: 30px;
+}
+
+.delete-icon {
+    right: 0;
 }
 
 

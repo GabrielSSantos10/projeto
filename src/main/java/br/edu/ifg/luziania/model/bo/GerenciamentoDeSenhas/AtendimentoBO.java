@@ -14,6 +14,7 @@ public class AtendimentoBO {
     PacienteDAO pacienteDAO;
 
     private final Queue<Paciente> filaPacientes = new LinkedList<>();
+    private Paciente pacienteAtual = null; // <- aqui está o controle do paciente chamado
 
     public void realizarAtendimento(String nome, String cpf) {
         Paciente paciente = new Paciente(nome, cpf);
@@ -24,18 +25,18 @@ public class AtendimentoBO {
         filaPacientes.add(paciente);
     }
 
-
     public Paciente chamarPaciente() {
-        return filaPacientes.poll();
+        pacienteAtual = filaPacientes.poll(); // guarda quem foi chamado
+        return pacienteAtual;
     }
 
     public boolean isFilaVazia() {
         return filaPacientes.isEmpty();
     }
 
-    // Método para marcar paciente como ausente
     public void marcarPacienteComoAusente() {
-        filaPacientes.poll();// Remove o paciente atual da fila
+        pacienteAtual = null; // apenas "descarta" o atual
+        // Não mexe na fila!
     }
 }
 

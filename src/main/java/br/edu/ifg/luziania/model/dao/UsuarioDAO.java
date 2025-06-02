@@ -30,6 +30,11 @@ public class UsuarioDAO implements PanacheRepository<Usuario> {
         }
     }
 
+    public List<Usuario> listarTodos() {
+        String jpql = "SELECT u FROM Usuario u";
+        return entityManager.createQuery(jpql, Usuario.class).getResultList();
+    }
+
     public List<Usuario> pesquisarUsuarios(String nome, String email, String username) {
         StringBuilder queryStr = new StringBuilder("SELECT u FROM Usuario u WHERE 1=1");
 
@@ -56,6 +61,17 @@ public class UsuarioDAO implements PanacheRepository<Usuario> {
         }
 
         return query.getResultList();
+    }
+
+    public Usuario buscarPorCpf(String cpf) {
+        try {
+            return entityManager
+                    .createQuery("SELECT u FROM Usuario u WHERE u.cpf = :cpf", Usuario.class)
+                    .setParameter("cpf", cpf)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public void persist(Usuario usuario) {

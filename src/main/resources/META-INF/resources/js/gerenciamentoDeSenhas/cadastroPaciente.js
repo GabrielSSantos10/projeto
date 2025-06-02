@@ -42,7 +42,11 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(data => {
                 resultadoCadastroElem.textContent = 'Paciente cadastrado com sucesso!';
-                // Redirecionar após 2 segundos para a página de chamar senhas
+
+                // ✅ Alerta de sucesso
+                alert('Paciente cadastrado com sucesso!');
+
+                // Redirecionar após 1 segundo
                 setTimeout(() => {
                     window.location.href = '/atendimento';
                 }, 1000);

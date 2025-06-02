@@ -2,6 +2,8 @@ package br.edu.ifg.luziania.model.dto;
 
 public class UsuarioDTO {
 
+    private long id;
+
     private String nome;
 
     private String username;
@@ -26,6 +28,15 @@ public class UsuarioDTO {
         this.senha = senha;
     }
 
+    public UsuarioDTO(int id, String nome, String username, String email, String perfil, String senha, String cpf) {
+        this.id = id;
+        this.nome = nome;
+        this.username = username;
+        this.email = email;
+        this.perfil = perfil;
+        this.senha = senha;
+        this.cpf = cpf;
+    }
 
     // Getters e Setters
     public String getNome() {
@@ -74,5 +85,13 @@ public class UsuarioDTO {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

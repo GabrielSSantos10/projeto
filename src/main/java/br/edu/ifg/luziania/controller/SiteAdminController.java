@@ -17,6 +17,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Path("/site_admin")
 public class SiteAdminController {
@@ -27,6 +28,8 @@ public class SiteAdminController {
     Template conta;
     @Inject
     Template usuarios;
+    @Inject
+    Template editarUsuario;
     @Inject
     Template cadastroUsuario;
    @Inject
@@ -108,37 +111,80 @@ public class SiteAdminController {
     }
 
     @GET
-    //@RolesAllowed({"admin", "atendente"})
-    @Path("/usuario_list")
+    @Path("/usuario_page")
     //@RolesAllowed("admin")
     @Produces(MediaType.TEXT_HTML)
-    public TemplateInstance listUsers() {
+    public TemplateInstance userPage() {
         return usuarios.instance();
     }
 
     @GET
-    @Path("/pesquisar")
+    @Path("/usuario_list")
+    @RolesAllowed("admin")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response searchUsers(@QueryParam("nome") String nome,
-                                @QueryParam("cpf") String cpf,
-                                @QueryParam("email") String email) {
-        try {
-            List<Usuario> usuarios = usuarioBO.pesquisarUsuarios(nome, cpf, email);
+    public Response listarTodosUsuarios() {
+        List<Usuario> usuarios = usuarioBO.listarTodosUsuarios();
+        return Response.ok(usuarios).build();
+    }
 
-            if (usuarios.isEmpty()) {
-                return Response.status(Response.Status.NOT_FOUND)
-                        .entity("Nenhum usuário encontrado.")
-                        .build();
-            }
 
-            return Response.ok(usuarios).build();
+    @GET
+    @Path("/editarUsuario")
+    public TemplateInstance getUsuarioPage() {
+        return editarUsuario.instance();
+    }
 
-        } catch (IllegalArgumentException e) {
+    @PUT
+    @Path("/atualizar_usuario")
+    @RolesAllowed("admin")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Transactional
+    public Response atualizar(UsuarioDTO usuarioDTO) {
+        usuarioBO.atualizarUsuarioPorId(usuarioDTO);
+        return Response.ok().build();
+    }
 
+    @GET
+    @Path("/usuario/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    //@RolesAllowed("admin")
+    public Response buscarPorId(@PathParam("id") Long id) {
+        Optional<Usuario> usuarioOpt = usuarioBO.buscarUsuarioPorId(id);
+
+        if (usuarioOpt.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        Usuario usuario = usuarioOpt.get();
+        UsuarioDTO dto = new UsuarioDTO(
+                usuario.getNome(),
+                usuario.getUsername(),
+                usuario.getEmail(),
+                usuario.getPerfil(),
+                usuario.getCpf(),
+                null // Senha não é retornada por segurança
+        );
+
+        return Response.ok(dto).build();
+    }
+
+    @GET
+    @Path("/pesquisar")
+    @RolesAllowed("admin")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response pesquisarUsuarios(@QueryParam("nome") String nome,
+                                      @QueryParam("cpf") String cpf,
+                                      @QueryParam("email") String email) {
+        if ((nome == null || nome.isBlank()) &&
+                (cpf == null || cpf.isBlank()) &&
+                (email == null || email.isBlank())) {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(e.getMessage())
+                    .entity("Pelo menos um critério de pesquisa deve ser fornecido.")
                     .build();
         }
+
+        List<Usuario> usuarios = usuarioBO.pesquisarUsuarios(nome, email, cpf);
+        return Response.ok(usuarios).build();
     }
 
 }

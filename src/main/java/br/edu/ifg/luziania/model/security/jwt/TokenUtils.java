@@ -22,13 +22,12 @@ public class TokenUtils implements Serializable {
         JwtClaimsBuilder claimsBuilder = Jwt.claims();
         long currentTimeInSecs = currentTimeInSecs();
 
-        Set<String> roles = new HashSet<>(
-                Collections.singletonList(usuario.getPerfil()));
+        Set<String> roles = new HashSet<>(Collections.singletonList(usuario.getPerfil()));
 
         claimsBuilder.issuer("http://localhost:8080");
         claimsBuilder.subject(usuario.getUsername());
         claimsBuilder.issuedAt(currentTimeInSecs);
-        claimsBuilder.expiresAt(System.currentTimeMillis() + 3600 * 1000);
+        claimsBuilder.expiresAt(currentTimeInSecs + 3600); // CORRIGIDO
 
         claimsBuilder.claim("userId", usuario.getId());
         claimsBuilder.claim("nome", usuario.getNome());
@@ -37,11 +36,11 @@ public class TokenUtils implements Serializable {
         claimsBuilder.claim("perfil", usuario.getPerfil());
         claimsBuilder.claim("username", usuario.getUsername());
 
-        claimsBuilder.groups(roles);
+        claimsBuilder.groups(roles); // ESSENCIAL PARA @RolesAllowed
 
         return claimsBuilder.jws().sign(privateKey);
-
     }
+
 
     public static PrivateKey readPrivateKey(final String pemResName) throws Exception {
         try (InputStream contentIS = TokenUtils.class.getResourceAsStream("/privateKey.pem")) {
