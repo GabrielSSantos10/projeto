@@ -34,17 +34,53 @@ de usuários com diferentes perfis.
 
 ## 📁 Estrutura do Projeto
 ```
-├── main/
-│ ├── java/br/edu/ifg/luziania/
-│ │ ├── controller/
-│ │ ├── model/
-│ │ │ ├── bo/
-│ │ │ ├── dao/
-│ │ │ ├── dto/
-│ │ │ └── entity/
-│ └── resources/
-│ ├── META-INF/resources/ ← arquivos estáticos (CSS, JS, imagens)
-│ └── templates/ ← arquivos HTML (Qute templates)
+└── main
+├── java
+│ └── br
+│ └── edu
+│ └── ifg
+│ └── luziania
+│ ├── controller # Controladores REST e navegação
+│ │ ├── GerenciamentoDeSenhas
+│ │ │ ├── AtendenteController
+│ │ │ ├── CadastroPacienteController
+│ │ │ └── RetirarSenhaController
+│ │ ├── AgendamentoController
+│ │ ├── HomeController
+│ │ ├── LoginController
+│ │ ├── MedicoController
+│ │ ├── SiteAdminController
+│ │ └── UsuarioController
+│ ├── model
+│ │ ├── bo # Camada de regras de negócio
+│ │ │ ├── GerenciamentoDeSenhas
+│ │ │ │ ├── AtendimentoBO
+│ │ │ │ └── SenhaBO
+│ │ │ └── UsuarioBO
+│ │ ├── dao # Acesso a dados
+│ │ ├── dto # Objetos de transferência de dados
+│ │ ├── entity # Entidades JPA
+│ │ ├── exception # Exceções personalizadas
+│ │ ├── jwt # Utilitários para tokens JWT
+│ │ ├── log # Funcionalidades de log
+│ │ └── security
+│ │ └── jwt # Configuração de segurança com JWT
+├── resources
+│ ├── META-INF
+│ │ └── resources
+│ │ ├── css # Arquivos de estilo
+│ │ ├── img # Imagens utilizadas no sistema
+│ │ │ ├── editar.png
+│ │ │ └── lixeira.png
+│ │ └── img_readme # Imagens utilizadas no README
+│ ├── js
+│ │ ├── gerenciamentoDeSenhas
+│ │ │ ├── atendente.js
+│ │ │ ├── cadastroPaciente.js
+│ │ │ └── retirarSenha.js
+│ │ └── agendarConsulta.js
+│ └── templates # Templates HTML (Qute)
+│ └── application.properties # Configurações do Quarkus
 ```
 ## 🚀 Como Executar o Projeto
 
@@ -99,13 +135,23 @@ O projeto utiliza o **Quarkus** e pode ser executado com o Maven:
 
 ## 📸 Guia de Uso
 
-## 👤 Usuário admin automático
+## 👤 Criação de Usuário Admin
 
-Ao iniciar o sistema pela primeira vez, um perfil `admin` é criado automaticamente (caso ainda não exista).
+1. Acessando o endereço http://localhost:8080, você deverá selecionar a opcção
+`VISIT THE DEV UI`:
 
-**Credenciais padrão:**
-- username: `admin`
-- Senha: `admin123`
+![Tela Inicial Quarkus](src/main/resources/META-INF/resources/img_readme/quarkus_inicio.png)
+
+2. Ao selecionar o terceiro icone, você terá acesso aos Endpoints. Para criar um perfil de Admin, 
+você deve acessar o Endpoint `/usuario/cadastroAdmin`.
+
+![Tela de Endpoints](src/main/resources/META-INF/resources/img_readme/cadastroAdmin.png)
+
+![Tela de Endpoints](src/main/resources/META-INF/resources/img_readme/cadastroAdminpage.png)
+**Credenciais:**
+- Username: `Escolhido pelo usuario no momento do cadastro`
+- Senha: `admin123` (Senha padrão que pode ser alterada após o login acessando o Menu Dropdown com nome do 
+usuário -> Conta)
 - Perfil: `admin`
 
 > ⚠️ Esses dados são gerados automaticamente no momento em que o sistema iniciar.
