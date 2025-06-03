@@ -51,3 +51,7 @@ function carregarSiteAdminComToken(token) {
             console.error('Erro ao carregar a página do site admin:', error);
         });
 }
+
+document.getElementById('esqueci').addEventListener('click', function () {
+    alert('Entre em contato com o administrador do sistema para redefinir sua senha.');
+});
