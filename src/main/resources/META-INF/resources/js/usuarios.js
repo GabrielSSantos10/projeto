@@ -81,11 +81,18 @@ window.onload = function () {
                 if (response.ok) {
                     loadAllUsers();
                 } else {
-                    console.error('Erro ao deletar usuário:', response.statusText);
+                    return response.text().then(text => {
+                        console.error('Erro ao deletar usuário:', text);
+                        alert('Erro ao deletar usuário: ' + text);
+                    });
                 }
             })
-            .catch(error => console.error('Erro ao deletar usuário:', error));
+            .catch(error => {
+                console.error('Erro ao deletar usuário:', error);
+                alert('Erro ao deletar usuário: ' + error.message);
+            });
     }
+
 
     function loadAllUsers() {
         fetch('/usuario/all')
