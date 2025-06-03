@@ -1,4 +1,4 @@
-# Sistema de Atendimento - Clínica Oftalmológica
+# Sistema de Gerenciamento de Atendimentos para Clínica Oftalmológica com Java + Quarkus
 
 Este projeto é um sistema web desenvolvido para gerenciar o atendimento de uma clínica oftalmológica. 
 O sistema permite o controle de senhas, cadastro de pacientes em filas, chamadas para atendimento médico, e gerenciamento 
@@ -31,6 +31,20 @@ de usuários com diferentes perfis.
 - **Banco de Dados:** PostgresSQL
 - **Controle de Acesso:** Baseado no perfil do usuário
 - **Gerenciamento de estado:** Filas mantidas em memória (para chamadas de atendimento)
+
+## Requisitos do Projeto
+
+Certifique-se de que o seguinte item estejam instalado em sua máquina antes de executar o projeto:
+
+* SDK: Java 18
+1. No menu superior, acesse: File → Project Structure
+![Inteliji Projeto Structure](src/main/resources/META-INF/resources/img_readme/sdk.png)
+
+2. Em seguida, selecione a versão 18 do Java na opção de SDK:
+![Projeto Structure Version](src/main/resources/META-INF/resources/img_readme/sdkversion.png)
+
+   💡 Importante: O projeto foi desenvolvido com Java 18. Usar versões diferentes pode gerar erros de compatibilidade, 
+especialmente com bibliotecas ou configurações do Quarkus.
 
 ## 📁 Estrutura do Projeto
 ```
@@ -137,7 +151,7 @@ O projeto utiliza o **Quarkus** e pode ser executado com o Maven:
 
 ## 👤 Criação de Usuário Admin
 
-1. Acessando o endereço http://localhost:8080, você deverá selecionar a opcção
+1. Acessando o endereço http://localhost:8080, você deverá selecionar a opção
 `VISIT THE DEV UI`:
 
 ![Tela Inicial Quarkus](src/main/resources/META-INF/resources/img_readme/quarkus_inicio.png)
@@ -148,13 +162,13 @@ você deve acessar o Endpoint `/usuario/cadastroAdmin`.
 ![Tela de Endpoints](src/main/resources/META-INF/resources/img_readme/cadastroAdmin.png)
 
 ![Tela de Endpoints](src/main/resources/META-INF/resources/img_readme/cadastroAdminpage.png)
-**Credenciais:**
-- Username: `Escolhido pelo usuario no momento do cadastro`
-- Senha: `admin123` (Senha padrão que pode ser alterada após o login acessando o Menu Dropdown com nome do 
-usuário -> Conta)
-- Perfil: `admin`
 
-> ⚠️ Esses dados são gerados automaticamente no momento em que o sistema iniciar.
+**Credenciais:**
+* Usuário: Definido pelo próprio usuário no momento do cadastro
+
+* Senha: admin123 (senha padrão; recomenda-se alterá-la após o primeiro login, acessando o menu no canto superior direito → opção "Conta")
+
+* Perfil: admin (acesso completo ao sistema)
 
 ### 1. Tela de Login
 - Aqui você irá inserir as credenciais acima informadas:
@@ -162,13 +176,13 @@ usuário -> Conta)
 ![Tela de Login](src/main/resources/META-INF/resources/img_readme/tela_login.png)
 
 ### 2. Tela Inicial
-- Na tela inicial você irá encontrar um `Menu` e um dropbox com o nome do usuário que estiver logado.
+- Na tela inicial você irá encontrar um `Menu` do lado esquerdo e um dropdown com o nome do usuário que estiver logado.
 
 ![Tela Inicial](src/main/resources/META-INF/resources/img_readme/tela_inicial.png)
 
 ### 3. Gerar Senha
 
-* Esta é uma tela para simular um totem para Retirar uma Senha. Você pode acessa-la através do `Menu` -> `Retirar Senha`
+* Esta é uma tela para simular um totem para Retirar uma Senha. Você pode acessá-la através do `Menu` -> `Retirar Senha`
 
 ![Tela para Retirada de Senha](src/main/resources/META-INF/resources/img_readme/tela_chamarSenha.png)
 
@@ -177,7 +191,7 @@ usuário -> Conta)
 * Esta é a tela em que o atendente irá realizar o atendimento do paciente.
 * Temos três opções nessa tela:
 
-1. `Chamar Próxima Senha` que irá chamar a senha gerada no passo `3. Gerar Senha`
+1. `Chamar Próxima Senha` que irá chamar a senha gerada no passo 3. Gerar Senha”)
 ![Tela de Chamada](src/main/resources/META-INF/resources/img_readme/atendimento_recep.png)
 
 2. A opção `Realizar Atendimento` é liberada após uma senha ser chamada.
