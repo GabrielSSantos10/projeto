@@ -22,6 +22,7 @@ document.getElementById('cadastroUsuarioForm').addEventListener('submit', functi
         .then(response => {
             if (response.ok) {
                 alert('Usuário cadastrado com sucesso!');
+                window.location.href = "/site_admin/usuario_page";
             } else {
                 alert('Erro ao cadastrar usuário');
             }
